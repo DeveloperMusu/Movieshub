@@ -6,22 +6,25 @@ searchBtn.addEventListener('click', searchMovies);
 
 function searchMovies() {
 	const searchTerm = searchInput.value.trim();
-	fetch(`(link unavailable))
-		.then(response => response.json())
-		.then(data => {
-			const movies = data.data;
-			movies.forEach(movie => {
-				const movieDiv = document.createElement('div');
-				movieDiv.innerHTML = `
-					<img src="${movie.thumbnail_url}" alt="${movie.name}">
-					<h3>${movie.name}</h3>
-				`;
-				movieGrid.appendChild(movieDiv);
-			});
-		});
+	if (searchTerm) {
+		fetch(`(link unavailable))
+			.then(response => response.json())
+			.then(data => {
+				const movies = data.data;
+				movieGrid.innerHTML = '';
+				movies.forEach(movie => {
+					const movieDiv = document.createElement('div');
+					movieDiv.innerHTML = `
+						<img src="${movie.thumbnail_url}" alt="${movie.name}">
+						<h3>${movie.name}</h3>
+					`;
+					movieGrid.appendChild(movieDiv);
+				});
+			})
+			.catch(error => console.error(error));
+	}
 }
 
-// Call MixDrop API to get latest uploaded movies
 fetch(`(link unavailable))
 	.then(response => response.json())
 	.then(data => {
@@ -34,4 +37,5 @@ fetch(`(link unavailable))
 			`;
 			movieGrid.appendChild(movieDiv);
 		});
-	});
+	})
+	.catch(error => console.error(error));
